@@ -6,7 +6,7 @@
     <AssemblyOriginatorKeyFile>Mukaida.Nuget.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>向田パッケージ</Title>
-    <Version>1.00.00</Version>
+    <Version>1.00.01</Version>
   </PropertyGroup>
 
 </Project>
