@@ -1,0 +1,39 @@
+name: Upload Nuget Package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+          submodules: 'recursive'
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      # Nuget
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages for service
+        run: nuget restore projects/Mukaida.Nuget.sln
+
+      # ビルド
+      - name: Build with dotnet
+        run: dotnet build projects/Mukaida.Nuget.sln --configuration Release
+
+      - name: Publish Clients to NuGet
+        uses: alirezanet/publish-nuget@v3.1.0
+        with:
+          PROJECT_FILE_PATH: 'projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          TAG_COMMIT: false
+          NUGET_SOURCE: https://ksnuget-barget.azurewebsites.net
+          NUGET_KEY: ${{secrets.KENTEM_NUGET_KEY}}
