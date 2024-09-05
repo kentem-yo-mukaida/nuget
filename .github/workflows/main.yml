@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: develop
+          ref: main
           submodules: 'recursive'
 
       - name: Set up .NET Core
