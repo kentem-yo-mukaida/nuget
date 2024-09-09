@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-      project_file: './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
+      project_file: ./projects/Mukaida.Nuget/Mukaida.Nuget.csproj
 
     steps:
       - uses: actions/checkout@v4
