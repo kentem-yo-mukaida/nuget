@@ -19,7 +19,9 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Get package version
-        run: grep -rE '^\s*<Version>(.*)<\/Version>\s*$' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
+        run: |
+          grep -rE '^\s*<Version>(.*)<\/Version>\s*$' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
+          grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
 
       # Nuget
       - name: Setup NuGet
