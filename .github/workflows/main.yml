@@ -43,7 +43,7 @@ jobs:
         run: echo ${{ steps.setup_version.outputs.VERSION }}
         
       - name: Pack NuGet Package
-        run: dotnet pack Sharprompt/Sharprompt.csproj -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
+        run: dotnet pack './projects/Mukaida.Nuget/Mukaida.Nuget.csproj' -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
 
       - name: Publish
         run: dotnet nuget push dist/*.nupkg -k ${{ secrets.KENTEM_NUGET_KEY }} -s https://ksnuget-barget.azurewebsites.net/v3/index.json
