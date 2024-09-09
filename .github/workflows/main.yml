@@ -30,20 +30,20 @@ jobs:
         run: dotnet build projects/Mukaida.Nuget.sln --configuration Release
 
       # パッケージバージョンを取得
-      #- name: Setup Version
-      #  id: setup_version
-      #  run: echo "grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'" >> $GITHUB_OUTPUT
       - name: Setup Version
         id: setup_version
         run: |
           #grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
           echo "VERSION="$(grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj') >> $GITHUB_OUTPUT
 
+      # 取得したバージョンを確認
       - name: Echo Version
         run: echo ${{ steps.setup_version.outputs.VERSION }}
         
+      # パッケージを作成
       - name: Pack NuGet Package
         run: dotnet pack './projects/Mukaida.Nuget/Mukaida.Nuget.csproj' -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
 
+      # パッケージをアップロード
       - name: Publish
         run: dotnet nuget push dist/*.nupkg -k ${{ secrets.KENTEM_NUGET_KEY }} -s https://ksnuget-barget.azurewebsites.net/v3/index.json --skip-duplicate
