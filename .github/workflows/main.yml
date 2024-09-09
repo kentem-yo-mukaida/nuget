@@ -29,11 +29,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build projects/Mukaida.Nuget.sln --configuration Release
 
-      - name: Publish Clients to NuGet
-        uses: alirezanet/publish-nuget@v3.1.0
-        with:
-          PROJECT_FILE_PATH: 'projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
-          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-          TAG_COMMIT: false
-          NUGET_SOURCE: https://ksnuget-barget.azurewebsites.net
-          NUGET_KEY: ${{secrets.KENTEM_NUGET_KEY}}
+      - name: Get package version
+        run: echo grep ^\s*<Version>(.*)<\/Version>\s*$ 'projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
+
+      #- name: Publish Clients to NuGet
+      #  uses: alirezanet/publish-nuget@v3.1.0
+      #  with:
+      #    PROJECT_FILE_PATH: 'projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
+      #    VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+      #    TAG_COMMIT: false
+      #    NUGET_SOURCE: https://ksnuget-barget.azurewebsites.net
+      #    NUGET_KEY: ${{secrets.KENTEM_NUGET_KEY}}
