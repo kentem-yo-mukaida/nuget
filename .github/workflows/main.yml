@@ -35,7 +35,7 @@ jobs:
       #  run: echo "grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'" >> $GITHUB_OUTPUT
       - name: Setup Version
         id: setup_version
-        run: echo "VERSION=grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'" >> $GITHUB_ENV
+        run: echo "VERSION=$VERSION" >> $GITHUB_ENV
         env: 
           VERSION: grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
         
