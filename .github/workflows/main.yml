@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: 
+      project_file: './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
 
     steps:
       - uses: actions/checkout@v4
@@ -33,8 +35,7 @@ jobs:
       - name: Setup Version
         id: setup_version
         run: |
-          #grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
-          echo "VERSION="$(grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj') >> $GITHUB_OUTPUT
+          echo "VERSION="$(grep -Po '(?<=<Version>)([^</Version>]*)' $project_file) >> $GITHUB_OUTPUT
 
       # 取得したバージョンを確認
       - name: Echo Version
@@ -42,7 +43,7 @@ jobs:
         
       # パッケージを作成
       - name: Pack NuGet Package
-        run: dotnet pack './projects/Mukaida.Nuget/Mukaida.Nuget.csproj' -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
+        run: dotnet pack $project_file -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
 
       # パッケージをアップロード
       - name: Publish
