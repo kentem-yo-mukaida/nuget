@@ -34,8 +34,10 @@ jobs:
       #  id: setup_version
       #  run: echo "grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'" >> $GITHUB_OUTPUT
       - name: Setup Version
+        id: setup_version
+        run: echo "VERSION=grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'" >> $GITHUB_ENV
         env: 
-          Version: grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
+          VERSION: grep -Po '(?<=<Version>)([^</Version>]*)' './projects/Mukaida.Nuget/Mukaida.Nuget.csproj'
         
       - name: Pack NuGet Package
         run: dotnet pack Sharprompt/Sharprompt.csproj -c Release -o ./dist -p:Version=${{ env.VERSION }}
