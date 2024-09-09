@@ -34,8 +34,7 @@ jobs:
       # パッケージバージョンを取得
       - name: Setup Version
         id: setup_version
-        run: |
-          echo "VERSION="$(grep -Po '(?<=<Version>)([^</Version>]*)' $project_file) >> $GITHUB_OUTPUT
+        run: echo "VERSION="$(grep -Po '(?<=<Version>)([^</Version>]*)' $project_file) >> $GITHUB_OUTPUT
 
       # 取得したバージョンを確認
       - name: Echo Version
